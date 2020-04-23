@@ -1,0 +1,139 @@
+swagger: "2.0"
+info:
+  title: "Training API"
+  description: "REST API FOR TRAINING CRUD"
+  version: "1.0"
+basePath: "/"
+schemes:
+  - "https"
+paths:
+  /training:
+    post:
+      tags:
+        - "Training"
+      summary: "Add a new training"
+      description: ""
+      operationId: "createTraining"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Training object that needs to be added "
+          required: true
+          schema:
+            $ref: "#/definitions/Training"
+      responses:
+        200:
+          description: "ok"
+        400:
+          description: "Invalid input"
+    get:
+      tags:
+        - "Training"
+      summary: "Find Training by ID"
+      description: "Returns a single pet"
+      operationId: "getTrainingById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "trainingId"
+          in: "query"
+          description: "ID of pet to return"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Training"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Training not found"
+  /training/{trainingId}:
+    put:
+      tags:
+        - "Training"
+      summary: "Update an existing training"
+      description: ""
+      operationId: "updateTraining"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: trainingId
+          type: string
+          description: The id of the movie you want to update.
+          required: true
+        - in: body
+          name: trainingUpd
+          description: The params you want update with.
+          required: true
+          schema:
+            $ref: "#/definitions/TrainingUpd"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Training"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Training not found"
+    delete:
+      tags:
+        - "Training"
+      summary: "Deletes a Training"
+      description: ""
+      operationId: "deleteTraining"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "trainingId"
+          in: "path"
+          description: "Training id to delete"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Training Deleted"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Training Id not found"
+
+definitions:
+  Training:
+    type: "object"
+    required:
+      - "trainingId"
+      - "trainingName"
+      - "trainingDescription"
+      - "resourceName"
+    properties:
+      trainingId:
+        type: "string"
+        example: "1"
+      trainingName:
+        type: "string"
+        example: "Node JS training"
+      trainingDescription:
+        type: "string"
+        example: "Give a detailed desc of Node JS training"
+      resourceName:
+        type: "string"
+        example: "Spiderman"
+  TrainingUpd:
+    type: "object"
+    properties:
+      paramName:
+        type: "string"
+        example: "resourceName"
+      paramVal:
+        type: "string"
+        example: "spiderman"
